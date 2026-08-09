@@ -20,3 +20,5 @@ Este repositorio documenta mi progreso de aprendizaje en Python, Ciencia de Dato
 - pandas
 - Matplotlib
 
+## Registro
+- Entorno de desarrollo configurado correctamente.
