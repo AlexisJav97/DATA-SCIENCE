@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Credenciales y variables privadas
+.env
+
+# Archivos temporales de Microsoft Office
+~$*.docx
+~$*.xlsx
+~$*.pptx
+~WRL*.tmp
+*.tmp
+
+# Archivos del sistema
+Thumbs.db
+.DS_Store
+
+# Configuración local de VS Code
+.vscode/
+
+#Documento donde registro cosas que me interesan recordar
+*.docx
