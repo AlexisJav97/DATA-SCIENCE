@@ -1,0 +1,6 @@
+MOTOR: M2
+VOLTAJE: 24 V
+CORRIENTE: 3.2 A
+RPM: 1500
+
+Temperatura: 65 ºC

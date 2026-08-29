@@ -1,0 +1,6 @@
+    Motor: M1
+Voltaje: 24 V
+Corriente: 3.2 A
+RPM: 1500
+Temperatura: 62 ºC
+Estado: NORMAL
