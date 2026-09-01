@@ -1,7 +1,22 @@
 from .calculos_motor import calcular_potencia, calcular_resistencia
 from .conversion import rpm_a_rad_s
 
-def analizar_motor(voltaje,corriente,rpm):
+def analizar_motor(voltaje: float,corriente: float ,rpm: int) -> tuple[float,float,float]:
+    """
+    Analiza las principales variables de un motor.
+
+    Parámetros:
+        voltaje: Voltaje del motor en V.
+        corriente: Corriente del motor en A.
+        rpm: Velocidad del motor en RPM.
+
+    Retorna:
+        Tupla en el siguiente orden:
+        1. potencia [W]
+        2. resistencia [ohm]
+        3. velocidad angular [rad/s]
+    """
+
     potencia = calcular_potencia(voltaje, corriente)
     resistencia = calcular_resistencia(voltaje, corriente)
 
