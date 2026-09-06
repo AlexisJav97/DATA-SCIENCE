@@ -1,0 +1,4 @@
+id,voltaje_v,corriente_a,rpm,potencia_w,resistencia_ohm,velocidad_angular_rad_s
+M1,24.0,3.2,1500,76.8,7.5,157.08
+M2,24.0,2.8,1450,67.2,8.57,151.84
+M3,24.0,1.9,1200,45.6,12.63,125.66
