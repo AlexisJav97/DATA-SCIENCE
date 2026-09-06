@@ -1,5 +1,6 @@
 from herramientas.lector_motores import leer_motores
-from herramientas.analisis_motor import analizar_motor
+from herramientas.reportes import mostrar_motores, mostrar_analisis_motores, mostrar_estadisticas_motores
+from herramientas.busqueda_motor import buscar_motor_por_id
 
 RUTA_MOTORES = (
     r"C:\Users\AlexisJav\Desktop\DATA SCIENCE"
@@ -9,20 +10,48 @@ RUTA_MOTORES = (
 def main() -> None:
     motores = leer_motores(RUTA_MOTORES)
 
-    print("=== ANÁLISIS DE MOTORES ===")
-    print()
+    while True:
 
-    for motor in motores:
-        potencia, resistencia, velocidad_rad_s = analizar_motor(motor['voltaje'],motor['corriente'],motor['rpm'])
+        print("=== SISTEMA DE ANÁLISIS DE MOTORES ===")
+        print()
+        print("""
+            1. Mostrar motores
+            2. Analizar motores
+            3. Buscar motor por ID
+            4. Mostrar estadísticas
+            0. Salir
+            """)
+        try:
+            opc_menu = int(input("SELECCIONE UNA OPCIÓN: "))
+        except ValueError:
+            print("❌ INGRESE UNA OPCIÓN VÁLIDA")
+            continue
 
-        print(f"Motor: {motor['id']}")
-        print(f"Voltaje: {motor['voltaje']:.2f} V")
-        print(f"Corriente: {motor['corriente']:.2f} A")
-        print(f"RPM: {motor['rpm']}")
-        print(f"Potencia: {potencia:.2f} W")
-        print(f"Resistencia: {resistencia:.2f} ohm")
-        print(f"Velocidad angular: {velocidad_rad_s:.2f} rad/s")
-        print(30 * "-")
+        if opc_menu == 1:
+            mostrar_motores(motores)
+                
+        elif opc_menu == 2:
+            mostrar_analisis_motores(motores)
+
+        elif opc_menu == 3:
+            id_motor = input("Ingrese el ID del motor (Ej.: M1): ").strip().upper()
+            motor_encontrado = buscar_motor_por_id(motores, id_motor)
+            if motor_encontrado is not None:
+                mostrar_motores([motor_encontrado])
+            else:
+                print("❌ Motor no encontrado")
+
+        elif opc_menu == 4:
+            mostrar_estadisticas_motores(motores)
+
+        elif opc_menu == 0:
+            print("Finalizando...")
+            break    
+
+        else:
+            print("Opción inválida")
+
+            
 
 if __name__ == "__main__":
     main()

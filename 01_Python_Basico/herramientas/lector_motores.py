@@ -1,3 +1,22 @@
+"""
+Módulo encargado de leer y validar datos de motores desde archivos CSV.
+
+Responsabilidad:
+    - Leer motores desde un archivo CSV.
+    - Convertir los datos a tipos numéricos.
+    - Descartar motores con datos inválidos.
+
+Funciones principales:
+    - validar_datos()
+    - leer_motores()
+
+Dependencias:
+    - csv
+
+Usado por:
+    - main.py
+"""
+
 import csv
 
 def validar_datos(diccionario) -> tuple[str, float | None, float | None, int | None, bool]:

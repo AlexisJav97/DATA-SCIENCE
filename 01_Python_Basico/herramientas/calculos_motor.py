@@ -1,11 +1,45 @@
 
+"""
+Módulo de cálculos eléctricos relacionados con motores.
 
-def calcular_potencia(voltaje, corriente):
+Responsabilidad:
+    Realizar cálculos eléctricos básicos.
+
+Funciones principales:
+    - calcular_potencia()
+    - calcular_resistencia()
+
+Dependencias:
+    Ninguna.
+"""
+
+def calcular_potencia(voltaje:float, corriente:float)->float:
+    """
+    Calcula la potencia [W] del motor con los valores de Voltaje [V] y Corriente [A]    
+    
+    Paràmetros:
+        voltaje: voltaje [V]
+        corriente: corriente [A]
+    
+    Retorna:
+        potencia: potencia [W]
+    """
     potencia = voltaje * corriente
     return potencia
 
 
-def calcular_resistencia(voltaje, corriente):
+def calcular_resistencia(voltaje:float, corriente:float)->float:
+    """
+    Mediante la ley de OHM calcula la resistencia del motor con los valores de Voltaje [V] y Corriente [A]    
+    
+    
+    Paràmetros:
+        voltaje: voltaje [V]
+        corriente: corriente [A]
+    
+    Retorna:
+        resistencia: resistencia [ohms]
+    """
     resistencia = voltaje / corriente
     return resistencia
 
