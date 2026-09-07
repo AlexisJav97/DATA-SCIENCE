@@ -11,18 +11,18 @@ Funciones principales:
     - mostrar_analisis_motores()
     - mostrar_estadisticas_motores()
     - guardar_reporte_csv()
-
+Librerías estándar:
+    - csv
+    - pathlib
 Dependencias:
-    -lector_motores.py
     -analizar_motor.py
 Usado por:
     - main.py
 """
 
-
-from .lector_motores import leer_motores
 from .analisis_motor import analizar_motor, estadistica_motores
 import csv
+from pathlib import Path
 
 def mostrar_motores(motores: list[dict]) -> None:
     """
@@ -124,7 +124,7 @@ def mostrar_estadisticas_motores(motores: list[dict]) -> None:
     except ValueError as error:
         print(f"Error: {error}")
 
-def guardar_reporte_csv(motores: list[dict], ruta_salida: str) -> None:
+def guardar_reporte_csv(motores: list[dict], ruta_salida: str | Path) -> None:
     """
     Genera y guarda un reporte CSV con el análisis de los motores.
 
@@ -163,11 +163,16 @@ def guardar_reporte_csv(motores: list[dict], ruta_salida: str) -> None:
             Si ocurre un problema al crear o escribir el archivo.
     """
 
-    if not mostrar_motores:
+    if not motores:
         raise ValueError("No existen motores para generar el reporte.")
     
-    if not ruta_salida.strip():
+    if not isinstance(ruta_salida, (str, Path)):
+        raise TypeError("La ruta debe ser una cadena o un objeto Path.")
+    
+    if isinstance(ruta_salida, str) and not ruta_salida.strip():
         raise ValueError("No se ingresó la ruta de salida del reporte.")
+
+    ruta = Path(ruta_salida)
 
     campos = ["id","voltaje_v","corriente_a","rpm","potencia_w","resistencia_ohm","velocidad_angular_rad_s"]
     reporte_motores = []
@@ -185,31 +190,10 @@ def guardar_reporte_csv(motores: list[dict], ruta_salida: str) -> None:
                                 "resistencia_ohm": round(resistencia,2),
                                 "velocidad_angular_rad_s": round(rad_s,2)})
 
-    with open(ruta_salida, "w",newline="",encoding="utf-8") as archivo:
+    with ruta.open( "w",newline="",encoding="utf-8") as archivo:
         escritor = csv.DictWriter(archivo, fieldnames= campos)
         escritor.writeheader()
         escritor.writerows(reporte_motores)
 
 if __name__ == "__main__":
-    motores =[]
-    RUTA_MOTORES = (
-    r"C:\Users\AlexisJav\Desktop\DATA SCIENCE"
-    r"\01_Python_Basico\motores.csv")
-    RUTA_SALIDA = (
-    r"C:\Users\AlexisJav\Desktop\DATA SCIENCE\01_Python_Basico\reporte_motores.csv")
-
-    motores =leer_motores(RUTA_MOTORES)
-    mostrar_motores(motores)
-    mostrar_analisis_motores(motores)
-    mostrar_estadisticas_motores(motores)
-    mostrar_estadisticas_motores([])
-    guardar_reporte_csv(motores, RUTA_SALIDA)
-    try:
-        guardar_reporte_csv([], RUTA_SALIDA)
-    except ValueError as error:
-        print(f"Error: {error}")
-    try:
-        guardar_reporte_csv(motores, "")
-    except ValueError as error:
-        print(f"Error: {error}")
-        
+    pass

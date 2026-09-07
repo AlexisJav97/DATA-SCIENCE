@@ -1,16 +1,18 @@
 from herramientas.lector_motores import leer_motores
 from herramientas.reportes import mostrar_motores, mostrar_analisis_motores, mostrar_estadisticas_motores, guardar_reporte_csv
 from herramientas.busqueda_motor import buscar_motor_por_id, filtrar_motores_por_rpm_minima
+from pathlib import Path
 
-RUTA_MOTORES = (
-    r"C:\Users\AlexisJav\Desktop\DATA SCIENCE"
-    r"\01_Python_Basico\motores.csv"
-)
-RUTA_SALIDA = (
-    r"C:\Users\AlexisJav\Desktop\DATA SCIENCE\01_Python_Basico\reporte_motores.csv")
+CARPETA_PROYECTO = Path(__file__).resolve().parent
 
+CARPETA_DATOS = CARPETA_PROYECTO / "datos"
+CARPETA_REPORTES = CARPETA_PROYECTO / "reportes"
+
+RUTA_MOTORES = CARPETA_DATOS / "motores.csv"
+RUTA_REPORTE = CARPETA_REPORTES / "reporte_motores.csv"
 
 def main() -> None:
+    CARPETA_REPORTES.mkdir(parents=True,exist_ok=True)
     motores = leer_motores(RUTA_MOTORES)
 
     while True:
@@ -79,11 +81,14 @@ def main() -> None:
         elif opc_menu == 6:
             try:
 
-                guardar_reporte_csv(motores, RUTA_SALIDA)
+                guardar_reporte_csv(motores, RUTA_REPORTE)
                 print("✅ Reporte CSV guardado correctamente.")
-                print(f"Ubicación: {RUTA_SALIDA}")
+                print(f"Ubicación: {RUTA_REPORTE}")
             except ValueError as error:
                 print(f"Error en los datos: {error}")
+
+            except TypeError as error:
+                print(f"Error en la ruta: {error}")
 
             except OSError as error:
                 print(f"Error al guardar el archivo: {error}")
@@ -97,4 +102,35 @@ def main() -> None:
             
 
 if __name__ == "__main__":
+    print(f"Carpeta del proyecto: {CARPETA_PROYECTO}")
+    print(5*"----")
+    print(f"Carpeta de entrada: {CARPETA_DATOS}")
+    print(f"Carpeta de salida: {CARPETA_REPORTES}")
+    print(5*"----")
+    print(f"Archivo de entrada: {RUTA_MOTORES}")
+    print(f"Archivo de salida: {RUTA_REPORTE}")
+    print(5*"----")
+    print(__file__)
+    print(5*"----")
+    #__file__       → cadena con una ubicación
+    #Path(__file__) → objeto para manipular esa ubicación
+    print(type(__file__))
+    print(type(Path(__file__)))
+    print(5*"$$$$")
+    #RUTA ABSOLUTA COMPLETA
+    print(Path(__file__).resolve()) 
+    print(type(Path(__file__).resolve())) 
+    print(5*"@@@@")
+    #RUTA DE LA CARPETA QUE CONTIENE ESE ARCHIVO
+    print(Path(__file__).resolve().parent)
+    print(type(Path(__file__).resolve().parent))
+    print(5*"----")
+
+    print("=== COMPROBACIÓN DE RUTAS ===")
+    print(f"¿Existe LA RUTA DE motores.csv?: {RUTA_MOTORES.exists()}") #TRUE
+    print(f"¿Es un archivo?: {RUTA_MOTORES.is_file()}") #TRUE
+    print(f"¿Existe LA RUTA DE la carpeta datos?: {CARPETA_DATOS.exists()}")#TRUE
+    print(f"¿Es una carpeta?: {CARPETA_DATOS.is_dir()}") #TRUE
+    print(f"¿Existe LA RUTA DE LA carpeta reportes?: {CARPETA_REPORTES.exists()}")
+    print(f"¿Es una carpeta?: {CARPETA_REPORTES.is_dir()}")
     main()
