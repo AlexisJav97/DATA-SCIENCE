@@ -18,6 +18,7 @@ Usado por:
 """
 
 import csv
+from pathlib import Path
 
 def validar_datos(diccionario) -> tuple[str, float | None, float | None, int | None, bool]:
     """
@@ -68,9 +69,9 @@ def validar_datos(diccionario) -> tuple[str, float | None, float | None, int | N
     return diccionario['id'], voltaje, corriente, rpm, dato_valido
 
 
-def leer_motores(ruta_archivo: str) -> list[dict[str, str | float | int]]:
+def leer_motores(ruta_archivo: str | Path) -> list[dict[str, str | float | int]]:
     """
-    Mediante la ruta del archivo csv se lee la informacion del conjunto de motores que tienes disponible, valida que cada motor tenga sus datos de forma adecuada y mediante esa validacion guarda en una coleccion tipo lista los motores si cumplien
+    Lee y valida los motores almacenados en un archivo CSV.
 
     Paràmetros:
         ruta_archivo:
@@ -85,10 +86,47 @@ def leer_motores(ruta_archivo: str) -> list[dict[str, str | float | int]]:
             "corriente": float,
             "rpm": int
         }
+
+    Excepciones:
+        TypeError:
+            Si la ruta no es una cadena ni un objeto Path.
+
+        ValueError:
+            Si se recibe una cadena vacía como ruta.
+
+        FileNotFoundError:
+            Si el archivo indicado no existe.
+
+        IsADirectoryError:
+            Si la ruta corresponde a una carpeta y no a un archivo.
+
+        OSError:
+            Si el sistema no puede abrir o leer el archivo.
     """
+    if not isinstance(ruta_archivo, (str, Path)):
+        raise TypeError(
+            "La ruta debe ser una cadena o un objeto Path."
+        )
+
+    if isinstance(ruta_archivo, str) and not ruta_archivo.strip():
+        raise ValueError(
+            "No se ingresó la ruta del archivo de motores."
+        )
+
+    ruta = Path(ruta_archivo)
+    if not ruta.exists():
+        raise FileNotFoundError(
+            f"No se encontró el archivo: {ruta}"
+        )
+
+    if not ruta.is_file():
+        raise IsADirectoryError(
+            f"La ruta no corresponde a un archivo: {ruta}"
+        )
+
     motores = []
 
-    with open(ruta_archivo, "r", encoding = "utf-8") as archivo:
+    with ruta.open("r", encoding="utf-8", newline="") as archivo:
         lector = csv.DictReader(archivo)
 
         for motor in lector:

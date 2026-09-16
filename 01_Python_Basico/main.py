@@ -12,8 +12,17 @@ RUTA_MOTORES = CARPETA_DATOS / "motores.csv"
 RUTA_REPORTE = CARPETA_REPORTES / "reporte_motores.csv"
 
 def main() -> None:
-    CARPETA_REPORTES.mkdir(parents=True,exist_ok=True)
-    motores = leer_motores(RUTA_MOTORES)
+    try:
+        CARPETA_REPORTES.mkdir(parents=True, exist_ok=True)
+        motores = leer_motores(RUTA_MOTORES)
+
+    except (TypeError, ValueError) as error:
+        print(f"Error en la configuración de la ruta: {error}")
+        return
+
+    except OSError as error:
+        print(f"Error al preparar los archivos: {error}")
+        return
 
     while True:
 
