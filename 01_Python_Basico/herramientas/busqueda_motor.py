@@ -66,13 +66,13 @@ def filtrar_motores_por_rpm_minima(motores: list[dict], rpm_min: int) -> list[di
                     "rpm": 1500
                 }
 
-        rpm_minima:
+        rpm_min:
             Velocidad mínima en RPM que debe tener un motor
             para ser incluido en el resultado.
 
     Retorna:
         Lista de diccionarios con los motores cuya velocidad
-        es igual o superior a rpm_minima.
+        es igual o superior a rpm_min.
 
         Retorna una lista vacía si ningún motor cumple
         la condición o si la lista recibida está vacía.
